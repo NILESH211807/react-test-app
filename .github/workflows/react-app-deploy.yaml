@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 2775
           script: |
-            cd /root/react-app
+            cd /root/react-test-app
             git pull origin master
             docker compose down
             docker compose up -d --build
