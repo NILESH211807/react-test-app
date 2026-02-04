@@ -5,13 +5,14 @@ on:
     branches: [master]
 
 jobs:
-  test:
-    timeout-minutes: 60
+  frontend:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         shell: bash
         working-directory: frontend
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,18 +31,23 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-  frontend:
+  backend:
+    needs: frontend
     runs-on: ubuntu-latest
 
     defaults:
       run:
         shell: bash
-        working-directory: frontend
+        working-directory: backend
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+  deploy:
+    needs: backend
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
