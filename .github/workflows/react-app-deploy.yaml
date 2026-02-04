@@ -1,23 +1,27 @@
-# name: Deploy react app
-# on:
-#   push:
-#     branches: [master]
+name: Deploy react app
+on:
+  push:
+    branches: [master]
 
-# jobs:
-#   runs-on: ubuntu-latest
-#   steps:
-#     - name: Checkout code
-#     - uses: actions/checkout@v4
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v4
 
-#     - name: Deploy via SSH
-#     - uses: appleboy/ssh-action@v1.0.3
-#       with:
-#         host: ${{ secrets.SSH_HOST }}
-#           username: ${{ secrets.SSH_USER }}
-#           key: ${{ secrets.SSH_KEY }}
-#           port: 2775
-#           script: |
-#             cd /root/react-app
-#             git pull origin master
-#             docker compose down
-#             docker compose up -d --build
+      - name: Deploy via SSH
+      - uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 2775
+          script: |
+            cd /root/react-app
+            git pull origin master
+            docker compose down
+            docker compose up -d --build
