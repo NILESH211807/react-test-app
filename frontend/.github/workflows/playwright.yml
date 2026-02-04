@@ -25,3 +25,20 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  deploy:
+    steps:
+       - name: Checkout code
+       - uses: actions/checkout@v4
+   
+       - name: Deploy via SSH
+       - uses: appleboy/ssh-action@v1.0.3
+         with: 
+           host: ${{ secrets.SSH_HOST }}
+             username: ${{ secrets.SSH_USER }}
+             key: ${{ secrets.SSH_KEY }}
+             port: 2775
+             script: |
+               cd /root/react-app
+               git pull origin master
+               docker compose down
+               docker compose up -d --build
