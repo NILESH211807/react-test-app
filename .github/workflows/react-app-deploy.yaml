@@ -1,21 +1,24 @@
 name: Deploy react app
+
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   frontend:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         shell: bash
         working-directory: frontend
+
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Deploy via SSH
-      - uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
