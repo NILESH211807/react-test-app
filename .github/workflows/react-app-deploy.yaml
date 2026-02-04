@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
       shell: bash
-      working-directory: ./frontend
+      working-directory: frontend
     steps:
       - name: Checkout code
       - uses: actions/checkout@v4
