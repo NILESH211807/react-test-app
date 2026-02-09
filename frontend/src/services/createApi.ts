@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, type BaseQueryFn, type FetchArgs, type FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { navigateTo } from './navigation';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -14,9 +15,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
         const errorStatusCode = result.error?.status;
 
         if (errorStatusCode === 401) {
-            window.location.replace('/login');
+            navigateTo('/login')
         }
-
         return result;
     }
 
